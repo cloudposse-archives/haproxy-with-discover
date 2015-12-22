@@ -1,0 +1,33 @@
+global
+  daemon
+  maxconn 256
+
+defaults
+  mode {{getenv "HAPROXY_MODE"}}
+  timeout connect 5000ms
+  timeout client 50000ms
+  timeout server 50000ms
+
+  balance roundrobin
+  option abortonclose
+  option redispatch
+  retries 3
+
+
+listen admin
+  bind *:9001
+  stats enable
+
+frontend cluster
+  bind *:9000
+  default_backend pool
+
+backend pool
+  {{if getenv "HAPROXY_CHECK"}}
+  option httpchk {{getenv "HAPROXY_CHECK"}}
+  {{else}}
+  option httpchk {{getenv "HAPROXY_CHECK_METHOD"}} {{getenv "HAPROXY_CHECK_PATH"}} {{getenv "HAPROXY_CHECK_VERSION"}}\r\nHost:\ {{getenv "HAPROXY_CHECK_HOST"}}\r\nConnection:\ close
+  {{end}}
+  {{range ls "/"}}
+  {{  if exists (printf "/%s" .)}}server {{.}} {{getv (printf "/%s" .)}}{{end}}
+  {{end}}

@@ -1,0 +1,7 @@
+[template]
+src = "haproxy.cfg.tmpl"
+dest = "/etc/haproxy/haproxy.cfg"
+keys = [
+    "/",
+]
+reload_cmd = "/etc/init.d/haproxy reload"
