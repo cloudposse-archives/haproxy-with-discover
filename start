@@ -2,8 +2,8 @@
 
 /etc/init.d/haproxy start
 
-if [ -f /etc/confd/templates/$HAPROXY_MODE.cfg ]; then
-  cp /etc/confd/templates/$HAPROXY_MODE.cfg /etc/confd/templates/haproxy.cfg
+if [ -f /etc/confd/templates/$HAPROXY_MODE.cfg.tmpl ]; then
+  cp /etc/confd/templates/$HAPROXY_MODE.cfg.tmpl /etc/confd/templates/haproxy.cfg.tmpl
 else
   echo "$HAPROXY_MODE not supported"
   exit 1
