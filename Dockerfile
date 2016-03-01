@@ -18,6 +18,8 @@ ADD https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/c
 
 RUN chmod 755 /usr/bin/confd && \
     sed -i s/ENABLED=0/ENABLED=1/g /etc/default/haproxy 
-
+ADD start /start
 ADD confd/ /etc/confd
-CMD /etc/init.d/haproxy start && /usr/bin/confd -prefix=$CONFD_PREFIX -interval=$CONFD_INTERVAL -node=http://$ETCD_HOST:$ETCD_PORT -watch
+
+ENTRYPOINT ["/start"]
+

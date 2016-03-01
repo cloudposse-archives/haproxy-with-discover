@@ -1,0 +1,12 @@
+#!/bin/bash
+
+/etc/init.d/haproxy start
+
+if [ -f /etc/confd/templates/$HAPROXY_MODE.cfg ]; then
+  cp /etc/confd/templates/$HAPROXY_MODE.cfg /etc/confd/templates/haproxy.cfg
+else
+  echo "$HAPROXY_MODE not supported"
+  exit 1
+fi
+
+exec /usr/bin/confd -prefix=$CONFD_PREFIX -interval=$CONFD_INTERVAL -node=http://$ETCD_HOST:$ETCD_PORT -watch

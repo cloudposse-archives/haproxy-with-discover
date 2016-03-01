@@ -1,0 +1,36 @@
+global
+  daemon
+  maxconn 256
+
+defaults
+  mode tcp
+  timeout connect 5000ms
+  timeout client 50000ms
+  timeout server 50000ms
+
+  balance roundrobin
+  option abortonclose
+  option redispatch
+  option tcplog
+  retries 3
+
+
+listen admin
+  bind *:9001
+  stats enable
+
+{{/* /tcp/30000/some_service = 10.1.0.11:22 check port 22 */}}
+
+{{range ls "/"}}
+{{$port := .}}
+#
+# TCP:{{$port}}
+#
+frontend tcp_{{$port}}
+  bind *:{{$port}}
+  default_backend tcp_{{$port}}
+
+backend tcp_{{$port}}
+  {{range ls (printf "/%s" $port)}}{{$service := .}}{{if exists (printf "/%s/%s" $port, $service)}}server {{$service}} {{getv (printf "/%s/%s" $port, $service)}}{{end}}
+{{end}}
+{{end}}
