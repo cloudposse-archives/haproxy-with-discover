@@ -3,7 +3,6 @@ global
   maxconn 256
 
 defaults
-  mode tcp
   timeout connect 5000ms
   timeout client 50000ms
   timeout server 50000ms
@@ -13,9 +12,10 @@ defaults
   option redispatch
   option tcplog
   retries 3
-
+  log /dev/stdout local0
 
 listen admin
+  mode http
   bind *:9001
   stats enable
 
@@ -27,10 +27,11 @@ listen admin
 # TCP:{{$port}}
 #
 frontend tcp_{{$port}}
+  mode tcp
   bind *:{{$port}}
   default_backend tcp_{{$port}}
 
 backend tcp_{{$port}}
-  {{range ls (printf "/%s" $port)}}{{$service := .}}{{if exists (printf "/%s/%s" $port, $service)}}server {{$service}} {{getv (printf "/%s/%s" $port, $service)}}{{end}}
+{{range ls (printf "/%s" $port)}}{{$service := .}}{{if exists (printf "/%s/%s" $port $service)}}  server {{$service}} {{getv (printf "/%s/%s" $port $service)}}{{end}}
 {{end}}
 {{end}}
