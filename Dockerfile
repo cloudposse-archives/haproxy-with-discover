@@ -14,6 +14,7 @@ ENV HAPROXY_CHECK_PATH /
 ENV HAPROXY_CHECK_VERSION HTTP/1.1
 ENV HAPROXY_CHECK_HOST localhost
 ENV HAPROXY_BIND_OPTIONS=
+ENV HAPROXY_NAMESERVER=
 
 ADD https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/confd-$CONFD_VERSION-linux-amd64 /usr/bin/confd
 
