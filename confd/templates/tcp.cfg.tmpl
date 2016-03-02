@@ -28,7 +28,7 @@ listen admin
 #
 frontend tcp_{{$port}}
   mode tcp
-  bind *:{{$port}}
+  bind *:{{$port}} {{getenv "HAPROXY_BIND_OPTIONS"}
   default_backend tcp_{{$port}}
 
 backend tcp_{{$port}}
