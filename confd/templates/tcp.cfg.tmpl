@@ -14,11 +14,13 @@ defaults
   timeout server 48h
 
   balance roundrobin
+
+  retries 3
+
   option abortonclose
   option redispatch
-  option tcplog
-  retries 3
 # FIXME: does not appear to work under docker
+#  option tcplog
 #  log /dev/stdout local0
 
 listen admin
