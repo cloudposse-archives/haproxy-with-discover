@@ -4,4 +4,5 @@ dest = "/etc/haproxy/haproxy.cfg"
 keys = [
     "/",
 ]
+check_cmd = "/usr/sbin/haproxy -c -f {{ .src }}"
 reload_cmd = "/reload"
