@@ -1,0 +1,8 @@
+#!/bin/bash
+
+service haproxy status
+if [ $? -eq 0 ]; then
+  service haproxy reload
+else
+  service haproxy start
+fi
