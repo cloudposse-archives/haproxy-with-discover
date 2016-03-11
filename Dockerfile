@@ -21,6 +21,7 @@ ADD https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/c
 RUN chmod 755 /usr/bin/confd && \
     sed -i s/ENABLED=0/ENABLED=1/g /etc/default/haproxy 
 ADD start /start
+ADD reload /reload
 ADD confd/ /etc/confd
 
 ENTRYPOINT ["/start"]

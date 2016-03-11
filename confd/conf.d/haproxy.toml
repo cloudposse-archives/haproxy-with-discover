@@ -4,4 +4,4 @@ dest = "/etc/haproxy/haproxy.cfg"
 keys = [
     "/",
 ]
-reload_cmd = "/etc/init.d/haproxy reload"
+reload_cmd = "/reload"

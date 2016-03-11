@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/etc/init.d/haproxy start
+service haproxy start
 
 if [ -f /etc/confd/templates/$HAPROXY_MODE.cfg.tmpl ]; then
   cp /etc/confd/templates/$HAPROXY_MODE.cfg.tmpl /etc/confd/templates/haproxy.cfg.tmpl
@@ -9,4 +9,4 @@ else
   exit 1
 fi
 
-exec /usr/bin/confd -prefix=$CONFD_PREFIX -interval=$CONFD_INTERVAL -node=http://$ETCD_HOST:$ETCD_PORT -watch
+/usr/bin/confd -prefix=$CONFD_PREFIX -interval=$CONFD_INTERVAL -node=http://$ETCD_HOST:$ETCD_PORT -watch

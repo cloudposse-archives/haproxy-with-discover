@@ -18,7 +18,8 @@ defaults
   option redispatch
   option tcplog
   retries 3
-  log /dev/stdout local0
+# FIXME: does not appear to work under docker
+#  log /dev/stdout local0
 
 listen admin
   mode http
