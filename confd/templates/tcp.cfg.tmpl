@@ -2,7 +2,7 @@ global
   daemon
   maxconn 256
 {{if getenv "HAPROXY_NAMESERVER"}}
-resolvers dns1
+resolvers dns
   nameserver      dns {{getenv "HAPROXY_NAMESERVER"}}:53
   resolve_retries 3
   timeout retry   1s
