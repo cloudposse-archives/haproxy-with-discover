@@ -3,7 +3,7 @@ global
   maxconn 256
 {{if getenv "HAPROXY_NAMESERVER"}}
 resolvers dns1
-  nameserver      dns1 {{getenv "HAPROXY_NAMESERVER"}}:53
+  nameserver      dns {{getenv "HAPROXY_NAMESERVER"}}:53
   resolve_retries 3
   timeout retry   1s
   hold valid      10s
